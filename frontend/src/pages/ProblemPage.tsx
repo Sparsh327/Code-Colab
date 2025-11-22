@@ -1,21 +1,21 @@
 import { Link } from "react-router";
 import Navbar from "../components/Navbar";
 
-import { PROBLEMS } from "../data/problems";
+import { PROBLEMS, type Problem } from "../data/problems";
 import { ChevronRightIcon, Code2Icon } from "lucide-react";
 import { getDifficultyBadgeClass } from "../lib/utils";
 
 function ProblemsPage() {
-  const problems = Object.values(PROBLEMS);
+  const problems: Problem[] = Object.values(PROBLEMS);
 
   const easyProblemsCount = problems.filter(
-    (p) => p.difficulty === "Easy"
+    (p) => p.difficulty === "easy"
   ).length;
   const mediumProblemsCount = problems.filter(
-    (p) => p.difficulty === "Medium"
+    (p) => p.difficulty === "medium"
   ).length;
   const hardProblemsCount = problems.filter(
-    (p) => p.difficulty === "Hard"
+    (p) => p.difficulty === "hard"
   ).length;
 
   return (
@@ -50,26 +50,29 @@ function ProblemsPage() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <h2 className="text-xl font-bold">{problem.title}</h2>
+
                           <span
                             className={`badge ${getDifficultyBadgeClass(
                               problem.difficulty
                             )}`}
                           >
-                            {problem.difficulty}
+                            {problem.difficulty.charAt(0).toUpperCase() +
+                              problem.difficulty.slice(1)}
                           </span>
                         </div>
+
                         <p className="text-sm text-base-content/60">
-                          {" "}
                           {problem.category}
                         </p>
                       </div>
                     </div>
+
                     <p className="text-base-content/80 mb-3">
                       {problem.description.text}
                     </p>
                   </div>
-                  {/* RIGHT SIDE */}
 
+                  {/* RIGHT SIDE */}
                   <div className="flex items-center gap-2 text-primary">
                     <span className="font-medium">Solve</span>
                     <ChevronRightIcon className="size-5" />
@@ -95,12 +98,14 @@ function ProblemsPage() {
                   {easyProblemsCount}
                 </div>
               </div>
+
               <div className="stat">
                 <div className="stat-title">Medium</div>
                 <div className="stat-value text-warning">
                   {mediumProblemsCount}
                 </div>
               </div>
+
               <div className="stat">
                 <div className="stat-title">Hard</div>
                 <div className="stat-value text-error">{hardProblemsCount}</div>
@@ -112,4 +117,5 @@ function ProblemsPage() {
     </div>
   );
 }
+
 export default ProblemsPage;
